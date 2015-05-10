@@ -19,6 +19,10 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         SettingsFragment.OnFragmentInteractionListener {
     private String[] mTabTitles = {"Doors", "Settings"};
 
+
+    private HomePagerAdapter mHomePagerAdapter;
+    private ViewPager mViewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,23 +35,28 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.home_pager);
-        HomePagerAdapter homePagerAdapter = new HomePagerAdapter(getSupportFragmentManager(), mTabTitles);
-        viewPager.setAdapter(homePagerAdapter);
+        mViewPager = (ViewPager) findViewById(R.id.home_pager);
+        mHomePagerAdapter = new HomePagerAdapter(getSupportFragmentManager(), mTabTitles);
+        mViewPager.setAdapter(mHomePagerAdapter);
 
         SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
         slidingTabLayout.setDistributeEvenly(true);
-        slidingTabLayout.setViewPager(viewPager);
+        slidingTabLayout.setViewPager(mViewPager);
 
     }
 
     @Override
     public void doorAdded(Door door) {
-
+        mHomePagerAdapter.notifyDataSetChanged();
+        mViewPager.setCurrentItem(0);
+        String homeFragmentTag = "android:switcher:"+R.id.home_pager+":"+0;
+        HomeFragment homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag(homeFragmentTag);
+        homeFragment.updateViews();
     }
 
     public class HomePagerAdapter extends FragmentPagerAdapter {
         private String[] tabTitles;
+
 
         public HomePagerAdapter(FragmentManager fm, String[] titles) {
             super(fm);

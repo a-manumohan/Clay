@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.activeandroid.query.Select;
 import com.clay.clay.R;
@@ -92,6 +93,10 @@ public class SettingsFragment extends Fragment {
                 String doorName = doorNameEditText.getText().toString().trim();
                 if (TextUtils.isEmpty(doorName)) {
                     doorNameEditText.setError("Please enter a door name");
+                    return;
+                }
+                if (mSelectedUsers.size() == 0) {
+                    Toast.makeText(getActivity(), "At least select one user to open the door", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 doorNameEditText.setError(null);

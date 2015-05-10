@@ -19,10 +19,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements OpenDoorDialogFragment.OnFragmentInteractionListener {
 
 
     private OnFragmentInteractionListener mListener;
+    private DoorsAdapter mDoorsAdapter;
 
 
     public static HomeFragment newInstance() {
@@ -51,9 +52,19 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         RecyclerView doorsGridRecyclerView = (RecyclerView) view.findViewById(R.id.doors_grid);
         List<Door> doors = new Select().from(Door.class).execute();
-        DoorsAdapter doorsAdapter = new DoorsAdapter((ArrayList<Door>) doors);
-        doorsGridRecyclerView.setAdapter(doorsAdapter);
-        doorsGridRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
+        mDoorsAdapter = new DoorsAdapter((ArrayList<Door>) doors, new DoorsAdapter.DoorsAdapterListener() {
+            @Override
+            public void onDoorSelected(Door door) {
+                showDoorOpenDialog(door);
+            }
+        });
+        doorsGridRecyclerView.setAdapter(mDoorsAdapter);
+        doorsGridRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -71,6 +82,17 @@ public class HomeFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    private void showDoorOpenDialog(Door door) {
+        OpenDoorDialogFragment openDoorDialogFragment = OpenDoorDialogFragment.newInstance(door);
+        openDoorDialogFragment.show(getChildFragmentManager(), "open-door");
+    }
+
+    public void updateViews() {
+        List<Door> doors = new Select().from(Door.class).execute();
+        mDoorsAdapter.setDoors((ArrayList<Door>) doors);
+        mDoorsAdapter.notifyDataSetChanged();
     }
 
 

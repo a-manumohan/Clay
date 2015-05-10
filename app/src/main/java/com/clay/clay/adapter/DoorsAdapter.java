@@ -16,9 +16,11 @@ import java.util.ArrayList;
  */
 public class DoorsAdapter extends RecyclerView.Adapter<DoorsAdapter.DoorViewHolder> {
     private ArrayList<Door> mDoors;
+    private DoorsAdapterListener mDoorsAdapterListener;
 
-    public DoorsAdapter(ArrayList<Door> doors) {
+    public DoorsAdapter(ArrayList<Door> doors, DoorsAdapterListener doorsAdapterListener) {
         mDoors = doors;
+        mDoorsAdapterListener = doorsAdapterListener;
     }
 
     @Override
@@ -29,6 +31,7 @@ public class DoorsAdapter extends RecyclerView.Adapter<DoorsAdapter.DoorViewHold
 
     @Override
     public void onBindViewHolder(DoorViewHolder holder, int position) {
+        holder.position = position;
         holder.doorNameTextView.setText(mDoors.get(position).getName());
     }
 
@@ -37,11 +40,27 @@ public class DoorsAdapter extends RecyclerView.Adapter<DoorsAdapter.DoorViewHold
         return mDoors == null ? 0 : mDoors.size();
     }
 
-    public static class DoorViewHolder extends RecyclerView.ViewHolder {
+    public class DoorViewHolder extends RecyclerView.ViewHolder {
         TextView doorNameTextView;
+        int position;
         public DoorViewHolder(View itemView) {
             super(itemView);
             doorNameTextView = (TextView) itemView.findViewById(R.id.door_name);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Door door = mDoors.get(position);
+                    mDoorsAdapterListener.onDoorSelected(door);
+                }
+            });
         }
+    }
+
+    public void setDoors(ArrayList<Door> doors) {
+        this.mDoors = doors;
+    }
+
+    public static interface DoorsAdapterListener{
+        void onDoorSelected(Door door);
     }
 }
