@@ -30,4 +30,5 @@ public class Door extends Model{
     public void setName(String name) {
         this.name = name;
     }
+
 }

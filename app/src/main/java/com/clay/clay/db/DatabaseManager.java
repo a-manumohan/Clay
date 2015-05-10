@@ -1,6 +1,7 @@
 package com.clay.clay.db;
 
 import com.activeandroid.query.Select;
+import com.clay.clay.model.Door;
 import com.clay.clay.model.User;
 
 import java.util.UUID;
@@ -14,7 +15,7 @@ public class DatabaseManager {
                 from(User.class).
                 where("role = ?", User.Role.ROOT).
                 executeSingle();
-        if(user == null){
+        if (user == null) {
             user = new User();
             user.setName("Root User");
             user.setUsername("root");
@@ -23,5 +24,75 @@ public class DatabaseManager {
             user.setRole(User.Role.ROOT);
             user.save();
         }
+    }
+
+    public static void createDummyDoors() {
+        if (new Select().from(Door.class).execute().size() > 0) {
+            return;
+        }
+        Door door = new Door();
+        door.setName("Front Door");
+        door.setDoorId(UUID.randomUUID().toString());
+        door.save();
+
+        door = new Door();
+        door.setName("Back Door");
+        door.setDoorId(UUID.randomUUID().toString());
+        door.save();
+
+        door = new Door();
+        door.setName("Office Door");
+        door.setDoorId(UUID.randomUUID().toString());
+        door.save();
+
+        door = new Door();
+        door.setName("Conf Door");
+        door.setDoorId(UUID.randomUUID().toString());
+        door.save();
+
+        door = new Door();
+        door.setName("Kitchen Door");
+        door.setDoorId(UUID.randomUUID().toString());
+        door.save();
+    }
+
+    public static void createDummyUsers() {
+        if (new Select().from(User.class).execute().size() > 1) {
+            return;
+        }
+        User user = new User();
+        user.setName("John");
+        user.setUserId(UUID.randomUUID().toString());
+        user.setPassword("1234");
+        user.setRole(User.Role.USER);
+        user.save();
+
+        user = new User();
+        user.setName("Manu");
+        user.setUserId(UUID.randomUUID().toString());
+        user.setPassword("1234");
+        user.setRole(User.Role.USER);
+        user.save();
+
+        user = new User();
+        user.setName("Mohan");
+        user.setUserId(UUID.randomUUID().toString());
+        user.setPassword("1234");
+        user.setRole(User.Role.USER);
+        user.save();
+
+        user = new User();
+        user.setName("James");
+        user.setUserId(UUID.randomUUID().toString());
+        user.setPassword("1234");
+        user.setRole(User.Role.USER);
+        user.save();
+
+        user = new User();
+        user.setName("Helen");
+        user.setUserId(UUID.randomUUID().toString());
+        user.setPassword("1234");
+        user.setRole(User.Role.USER);
+        user.save();
     }
 }

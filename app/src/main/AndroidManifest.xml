@@ -22,7 +22,7 @@
 
         <activity
             android:name=".activity.LoginActivity"
-            android:label="@string/title_activity_login"/>
+            android:label="@string/title_activity_login" />
         <activity
             android:name=".activity.SplashActivity"
             android:label="@string/app_name">
@@ -32,11 +32,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <meta-data android:name="AA_DB_NAME" android:value="clay.db" />
-        <meta-data android:name="AA_DB_VERSION" android:value="1" />
+
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="clay.db" />
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="1" />
         <meta-data
             android:name="AA_MODELS"
-            android:value="com.clay.clay.model.User, com.clay.clay.model.Door" />
+            android:value="com.clay.clay.model.User, com.clay.clay.model.Door, com.clay.clay.model.UserDoorRelation" />
     </application>
 
 </manifest>

@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import com.clay.clay.R;
 import com.clay.clay.fragment.HomeFragment;
 import com.clay.clay.fragment.SettingsFragment;
+import com.clay.clay.model.Door;
 import com.clay.clay.view.SlidingTabLayout;
 
 
@@ -37,6 +38,11 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
         slidingTabLayout.setDistributeEvenly(true);
         slidingTabLayout.setViewPager(viewPager);
+
+    }
+
+    @Override
+    public void doorAdded(Door door) {
 
     }
 
