@@ -18,7 +18,7 @@ public class DoorLog extends Model{
     @Column
     private User user;
     @Column
-    private String timestamp;
+    private long timestamp;
     @Column
     private Status status;
 
@@ -38,11 +38,11 @@ public class DoorLog extends Model{
         this.user = user;
     }
 
-    public String getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 

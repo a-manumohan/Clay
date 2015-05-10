@@ -116,7 +116,7 @@ public class OpenDoorDialogFragment extends DialogFragment {
         DoorLog doorLog = new DoorLog();
         doorLog.setUser(user);
         doorLog.setDoor(mDoor);
-        doorLog.setTimestamp(System.currentTimeMillis() + "");
+        doorLog.setTimestamp(System.currentTimeMillis());
         if (userDoorRelation == null) {
             Toast.makeText(getActivity(), "Access Denied!", Toast.LENGTH_SHORT).show();
             doorLog.setStatus(DoorLog.Status.ACCESS_DENIED);
@@ -124,6 +124,7 @@ public class OpenDoorDialogFragment extends DialogFragment {
             Toast.makeText(getActivity(), "Door Opened", Toast.LENGTH_SHORT).show();
             doorLog.setStatus(DoorLog.Status.OPENED);
         }
+        doorLog.save();
     }
 
     @Override

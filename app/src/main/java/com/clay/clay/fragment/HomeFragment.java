@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.activeandroid.query.Select;
 import com.clay.clay.R;
@@ -19,7 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment implements OpenDoorDialogFragment.OnFragmentInteractionListener {
+public class HomeFragment extends Fragment implements OpenDoorDialogFragment.OnFragmentInteractionListener
+        , EventsLogFragment.OnFragmentInteractionListener {
 
 
     private OnFragmentInteractionListener mListener;
@@ -60,6 +62,15 @@ public class HomeFragment extends Fragment implements OpenDoorDialogFragment.OnF
         });
         doorsGridRecyclerView.setAdapter(mDoorsAdapter);
         doorsGridRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+
+        Button logsButton = (Button) view.findViewById(R.id.log);
+        logsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EventsLogFragment eventsLogFragment = EventsLogFragment.newInstance();
+                eventsLogFragment.show(getChildFragmentManager(), "show-logs");
+            }
+        });
     }
 
     @Override
