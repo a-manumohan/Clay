@@ -9,12 +9,18 @@ import com.activeandroid.annotation.Table;
  */
 @Table(name = "doorlog")
 public class DoorLog extends Model{
+    public static enum Status{
+        ACCESS_DENIED,
+        OPENED
+    }
     @Column
     private Door door;
     @Column
     private User user;
     @Column
     private String timestamp;
+    @Column
+    private Status status;
 
     public Door getDoor() {
         return door;
@@ -39,4 +45,13 @@ public class DoorLog extends Model{
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 }
+

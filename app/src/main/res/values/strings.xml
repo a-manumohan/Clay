@@ -15,4 +15,5 @@
     <string name="action_add">Add</string>
     <string name="label_select_users">Select Users</string>
     <string name="action_open_door">OPEN DOOR</string>
+    <string name="action_sign_out">SIGN OUT</string>
 </resources>

@@ -96,7 +96,7 @@ public class SettingsFragment extends Fragment {
                     return;
                 }
                 if (mSelectedUsers.size() == 0) {
-                    Toast.makeText(getActivity(), "At least select one user to open the door", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Select at least one user to open the door", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 doorNameEditText.setError(null);

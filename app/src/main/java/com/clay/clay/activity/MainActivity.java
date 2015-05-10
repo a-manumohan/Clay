@@ -1,5 +1,6 @@
 package com.clay.clay.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -7,11 +8,15 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.clay.clay.R;
 import com.clay.clay.fragment.HomeFragment;
 import com.clay.clay.fragment.SettingsFragment;
 import com.clay.clay.model.Door;
+import com.clay.clay.util.PreferenceUtil;
 import com.clay.clay.view.SlidingTabLayout;
 
 
@@ -29,6 +34,29 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         setContentView(R.layout.activity_main);
 
         initViews();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.sign_out:
+                signOut();
+                break;
+        }
+        return true;
+    }
+
+    private void signOut() {
+        PreferenceUtil.Session.setUserId(this,"");
+        Intent intent = new Intent(this,LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void initViews() {

@@ -10,9 +10,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.activeandroid.query.Select;
 import com.clay.clay.R;
 import com.clay.clay.model.Door;
+import com.clay.clay.model.DoorLog;
+import com.clay.clay.model.User;
+import com.clay.clay.model.UserDoorRelation;
+import com.clay.clay.util.PreferenceUtil;
 
 
 public class OpenDoorDialogFragment extends DialogFragment {
@@ -28,7 +34,7 @@ public class OpenDoorDialogFragment extends DialogFragment {
         Bundle args = new Bundle();
         args.putSerializable(ARG_DOOR, door);
         fragment.setArguments(args);
-        fragment.setStyle(DialogFragment.STYLE_NO_TITLE,0);
+        fragment.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
         return fragment;
     }
 
@@ -80,6 +86,7 @@ public class OpenDoorDialogFragment extends DialogFragment {
         mProgressBar.setVisibility(View.VISIBLE);
         mProgressBar.setIndeterminate(true);
         mMainPanel.setVisibility(View.INVISIBLE);
+        setCancelable(false);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -88,11 +95,35 @@ public class OpenDoorDialogFragment extends DialogFragment {
                     public void run() {
                         mProgressBar.setVisibility(View.INVISIBLE);
                         mMainPanel.setVisibility(View.VISIBLE);
+                        setCancelable(true);
+                        checkAndOpenDoor();
                     }
                 });
             }
-        },3000);
+        }, 3000);
 
+
+    }
+
+    private void checkAndOpenDoor() {
+        User user = new Select().from(User.class).where("userid = ?", PreferenceUtil.Session.getUserId(getActivity())).executeSingle();
+
+        UserDoorRelation userDoorRelation = new Select()
+                .from(UserDoorRelation.class)
+                .where("user = ?", user.getId())
+                .and("door = ?", mDoor.getId())
+                .executeSingle();
+        DoorLog doorLog = new DoorLog();
+        doorLog.setUser(user);
+        doorLog.setDoor(mDoor);
+        doorLog.setTimestamp(System.currentTimeMillis() + "");
+        if (userDoorRelation == null) {
+            Toast.makeText(getActivity(), "Access Denied!", Toast.LENGTH_SHORT).show();
+            doorLog.setStatus(DoorLog.Status.ACCESS_DENIED);
+        } else {
+            Toast.makeText(getActivity(), "Door Opened", Toast.LENGTH_SHORT).show();
+            doorLog.setStatus(DoorLog.Status.OPENED);
+        }
     }
 
     @Override

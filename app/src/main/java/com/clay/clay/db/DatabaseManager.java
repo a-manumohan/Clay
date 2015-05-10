@@ -63,6 +63,7 @@ public class DatabaseManager {
         User user = new User();
         user.setName("John");
         user.setUserId(UUID.randomUUID().toString());
+        user.setUsername("john");
         user.setPassword("1234");
         user.setRole(User.Role.USER);
         user.save();
@@ -70,6 +71,7 @@ public class DatabaseManager {
         user = new User();
         user.setName("Manu");
         user.setUserId(UUID.randomUUID().toString());
+        user.setUsername("manu");
         user.setPassword("1234");
         user.setRole(User.Role.USER);
         user.save();
@@ -77,6 +79,7 @@ public class DatabaseManager {
         user = new User();
         user.setName("Mohan");
         user.setUserId(UUID.randomUUID().toString());
+        user.setUsername("mohan");
         user.setPassword("1234");
         user.setRole(User.Role.USER);
         user.save();
@@ -84,6 +87,7 @@ public class DatabaseManager {
         user = new User();
         user.setName("James");
         user.setUserId(UUID.randomUUID().toString());
+        user.setUsername("james");
         user.setPassword("1234");
         user.setRole(User.Role.USER);
         user.save();
@@ -91,6 +95,7 @@ public class DatabaseManager {
         user = new User();
         user.setName("Helen");
         user.setUserId(UUID.randomUUID().toString());
+        user.setUsername("helen");
         user.setPassword("1234");
         user.setRole(User.Role.USER);
         user.save();
